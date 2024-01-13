@@ -1,0 +1,133 @@
+.container .col {
+    border: 1px solid black;
+    aspect-ratio: 1;
+    padding: 0%;
+    display: grid;
+}
+
+.col .blob1,
+.col .blob2,
+.col .blob3 {
+    position: relative;
+    width: 2.8em;
+    height: 2.8em;
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color: red;
+   animation: spinaround 1.2s linear infinite;
+}
+.col .delay2
+{
+    animation-delay: -0.6s;
+}
+.col .delay31
+{
+    animation-delay: -0.8s;
+}
+.col .delay32
+{
+    animation-delay: -0.4s;
+}
+
+.col .leftf
+{
+    left: 2.8em;
+}
+.col .rightf
+{
+    right: 2.8em;
+}
+
+.col .righth {
+   right: 1.4em;
+}
+.col .lefth
+{
+    left: 1.4em;
+}
+
+
+@keyframes spinaround {
+    from {
+        transform: rotate(0deg) translate(15px) scale(-0.8);
+    }
+    to {
+        transform: rotate(360deg) translate(15px) scale(-0.8);
+    }
+}
+
+.container {
+    width: 100vh;
+    height: 100vh;
+}
+.animation {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    justify-self: center;
+    padding: 0;
+}
+.splitl,
+.splitr,
+.splitu,
+.splitd {
+    position: relative;
+    width: 2.8em;
+    height: 2.8em;
+    border: 1px solid black;
+    background-color: red;
+    border-radius: 50%;
+}
+
+.splitd{
+    right: 1.4em;
+    animation: splity 0.5s linear infinite;
+}
+.splitr{
+    left:1.4em;
+    animation: splitx 0.5s linear infinite;
+}
+@keyframes splitpx {
+    from
+    {
+        transform: scale(-0.7);
+    }
+    to
+    {
+        transform: translate(7em) scale(-0.7);
+    }
+}
+@keyframes splitnx {
+    from
+    {
+        transform: scale(0.7);
+    }
+    to
+    {
+        transform: translate(7em) scale(-0.7);
+    }
+}
+
+@keyframes splitny {
+    from
+    {
+        transform: scale(-0.7);
+    }
+    to
+    {
+        transform: translateY(7em) scale(-0.7);
+    }
+}
+@keyframes splitpy {
+    from
+    {
+        transform: scale(-0.7);
+    }
+    to
+    {
+        transform: translateY(-7em) scale(-0.7);
+    }
+}
