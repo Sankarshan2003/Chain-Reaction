@@ -14,7 +14,10 @@
     border: 1px solid black;
     border-radius: 50%;
     background-color: red;
-   animation: spinaround 1.2s linear infinite;
+}
+.spin
+{
+    animation: spinaround 1.2s linear infinite;
 }
 .col .delay2
 {
@@ -45,7 +48,14 @@
 {
     left: 1.4em;
 }
-
+.col .left2d
+{
+    left: 4.2em;
+}
+.col .right2d
+{
+    right:4.2em
+}
 
 @keyframes spinaround {
     from {
@@ -70,25 +80,20 @@
     justify-self: center;
     padding: 0;
 }
-.splitl,
-.splitr,
-.splitu,
-.splitd {
-    position: relative;
-    width: 2.8em;
-    height: 2.8em;
-    border: 1px solid black;
-    background-color: red;
-    border-radius: 50%;
-}
-
 .splitd{
-    right: 1.4em;
-    animation: splity 0.5s linear infinite;
+    
+    animation: splitny 0.3s linear 1;
 }
 .splitr{
-    left:1.4em;
-    animation: splitx 0.5s linear infinite;
+   
+    animation: splitpx 0.3s linear 1;
+}
+.splitu{
+    animation: splitpy 0.3s linear 1;
+}
+.splitl
+{
+    animation: splitnx 0.3s linear 1;
 }
 @keyframes splitpx {
     from
@@ -107,7 +112,7 @@
     }
     to
     {
-        transform: translate(7em) scale(-0.7);
+        transform: translate(-7em) scale(-0.7);
     }
 }
 
