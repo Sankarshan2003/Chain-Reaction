@@ -3,15 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    
-  </style>
+  <title>Button Click Promise</title>
+  <link rel="stylesheet" href="">
 </head>
 <body>
+
+<button id="myButton">Click me</button>
+
+<script>
+function waitForButtonClick() {
+  return new Promise((resolve) => {
+    const button = document.getElementById('myButton');
+    
+    // Event listener for button click
+    function handleClick() {
+      // Remove the event listener once the button is clicked
+      button.removeEventListener('click', handleClick);
+      
+      // Resolve the promise
+      resolve('Button Clicked!');
+      for(let i=0;i<10000;i++)
+      {
+        console.log('lol')
+      }
+    }
+
+    // Attach the event listener
+    button.addEventListener('click', handleClick);
+  });
+}
+
+// Usage example
+async function exampleUsage() {
+  console.log('Waiting for button click...');
   
-  <div class="container">
-    <div class="block1"></div>
-    <div class="block2"></div>
-  </div>
+  try {
+    const result = await waitForButtonClick();
+    console.log(result);
+  } catch (error) {
+    console.error(error);
+  }
+  console.log('clicked')
+}
+
+// Call the exampleUsage function
+
+let res=exampleUsage()
+//console.log('hellWorld')
+//console.log(res)
+</script>
+
 </body>
 </html>

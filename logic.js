@@ -4,6 +4,7 @@ for (let i = 0; i < 5; i++) {
     gamesState.push(k);
 }
 let aniState = [];
+let aevent=0;
 /*let isCorner = (xy)=>{
     i=xy[0];
     j=xy[1];
@@ -50,7 +51,7 @@ let isStable = (gs, xy) => {
     }
 
 }
-let updateGameState = (xy, gs) => {
+let updateGameState = async (xy, gs) => {
     let x = xy[0];
     let y = xy[1];
     let currentLevel = [];
@@ -91,7 +92,8 @@ let updateGameState = (xy, gs) => {
 
             }
         }
-        updateScreen(currentLevel)
+        //aniState.push(currentLevel)
+        await updateScreen(currentLevel)
         currentLevel = nextLevel;
         nextLevel = [];
 
@@ -108,130 +110,167 @@ let grid = document.querySelectorAll('.animation')
 let div1 = document.createElement('div')
 let div2 = document.createElement('div')
 let div3 = document.createElement('div')
-let updateScreen = (cl) => {
-    cl.forEach(i => {
-        console.log(i)
-        let X = i[0];
-        let Y = i[1];
-        let col = document.getElementById(`${i[0]} ${i[1]}`)
-        col.onanimationend = () => {
+let spin=(col,X,Y)=>{
+    let div1;
+    let div2;
+    let div3;
+    console.log(gamesState)
+    switch (gamesState[X][Y]) {
+        case 1:
+            col.innerHTML=''
+            div1 = document.createElement('div')
+            div1.classList.add('blob1', 'spin')
+            col.appendChild(div1)
+            break;
+        case 2:
+            col.innerHTML = '';
+            div1 = document.createElement('div')
+            div2 = document.createElement('div')
+            div1.classList.add('blob1', 'lefth', 'spin')
+            div2.classList.add('blob1', 'righth', 'delay2', 'spin')
+            col.appendChild(div1)
+            col.appendChild(div2)
+            // div2.classList.add('blob1','righth', 'delay2')
+            break;
+        case 3:
             col.innerHTML = ''
-        }
-        if (i[2] == 0) {
-            let div1;
-            let div2;
-            let div3;
-            console.log(gamesState)
-            switch (gamesState[X][Y]) {
-                case 1:
-                    div1 = document.createElement('div')
-                    div1.classList.add('blob1', 'spin')
-                    col.appendChild(div1)
-                    break;
-                case 2:
-                    col.innerHTML = '';
-                    div1 = document.createElement('div')
-                    div2 = document.createElement('div')
-                    div1.classList.add('blob1', 'lefth', 'spin')
-                    div2.classList.add('blob1', 'righth', 'delay2', 'spin')
-                    col.appendChild(div1)
-                    col.appendChild(div2)
-                    // div2.classList.add('blob1','righth', 'delay2')
-                    break;
-                case 3:
-                    col.innerHTML = ''
-                    div1 = document.createElement('div')
-                    div2 = document.createElement('div')
-                    div3 = document.createElement('div')
-                    // div1.classList.remove('lefth');
-                    div1.classList.add('blob1', 'leftf', 'delay31', 'spin')
-                    // div2.classList.remove('righth')
-                    div2.classList.add('blob1', 'delay32', 'spin')
-                    div3.classList.add('blob1', 'rightf', 'spin')
-                    col.appendChild(div1)
-                    col.appendChild(div2)
-                    col.appendChild(div3)
+            div1 = document.createElement('div')
+            div2 = document.createElement('div')
+            div3 = document.createElement('div')
+            // div1.classList.remove('lefth');
+            div1.classList.add('blob1', 'leftf', 'delay31', 'spin')
+            // div2.classList.remove('righth')
+            div2.classList.add('blob1', 'delay32', 'spin')
+            div3.classList.add('blob1', 'rightf', 'spin')
+            col.appendChild(div1)
+            col.appendChild(div2)
+            col.appendChild(div3)
 
-                    break;
+            break;
+    }
+}
+let split = (col,X,Y,resolve,j)=>{
+    let d1;
+    let d2;
+    let d3;
+    let d4;
+    col.innerHTML=''
+    if ((X === 0 && Y === 0) || (X === 0 && Y === 4) || (X === 4 && Y === 0) || (X === 4 && Y === 4)) {
+        d1 = document.createElement('div')
+        d2 = document.createElement('div')
+        d1.addEventListener('animationend',()=>{
+            if(!j)
+            resolve('Split Animation done')
+            col.innerHTML=''
+        })
+        if ((X === 0 && Y === 0)) {
+
+            d1.classList.add('blob1', 'lefth', 'splitr')
+            d2.classList.add('blob1', 'righth', 'splitd')
+        }
+        if (X === 0 && Y === 4) {
+            
+            d1.classList.add('blob1', 'lefth', 'splitl')
+            d2.classList.add('blob1', 'righth', 'splitd')
+
+        }
+        if (X === 4 && Y === 0) {
+
+            d1.classList.add('blob1', 'lefth', 'splitr')
+            d2.classList.add('blob1', 'righth', 'splitu')
+
+        }
+        if (X === 4 && Y === 4) {
+
+            d1.classList.add('blob1', 'lefth', 'splitl')
+            d2.classList.add('blob1', 'righth', 'splitu')
+
+        }
+        
+        col.appendChild(d1)
+        col.appendChild(d2)
+       
+
+    } else if ((X === 0 && (Y > 0 && Y < 4)) || (Y === 0 && (X > 0 && X < 4)) || (Y === 4 && (X > 0 && X < 4)) || (X === 4 && (Y > 0 && Y < 4))) {
+         d1 = document.createElement('div')
+         d2 = document.createElement('div')
+         d3= document.createElement('div')
+         d1.addEventListener('animationend',()=>{
+            //d1.removeEventListener('animationend')
+            if(!j)
+            resolve('Split Animation done')
+            col.innerHTML=''
+        })
+        if (Y === 0 || Y === 4) {
+            d1.classList.add('blob1', 'leftf', 'splitd')
+            d2.classList.add('blob1', 'splitu')
+            if (Y === 0) {
+                d3.classList.add('blob1', 'rightf', 'splitr')
+            } else {
+                d3.classList.add('blob1', 'rightf', 'splitl')
             }
         } else {
-            col.innerHTML = '';
-            //split Animation
-            if ((X === 0 && Y === 0) || (X === 0 && Y === 4) || (X === 4 && Y === 0) || (X === 4 && Y === 4)) {
-                let d1 = document.createElement('div')
-                let d2 = document.createElement('div')
-                if ((X === 0 && Y === 0)) {
-
-                    d1.classList.add('blob1', 'lefth', 'splitr')
-                    d2.classList.add('blob1', 'righth', 'splitd')
-                }
-                if (X === 0 && Y === 4) {
-                    
-                    d1.classList.add('blob1', 'lefth', 'splitl')
-                    d2.classList.add('blob1', 'righth', 'splitd')
-
-                }
-                if (X === 4 && Y === 0) {
-
-                    d1.classList.add('blob1', 'lefth', 'splitr')
-                    d2.classList.add('blob1', 'righth', 'splitu')
-
-                }
-                if (X === 4 && Y === 4) {
-
-                    d1.classList.add('blob1', 'lefth', 'splitl')
-                    d2.classList.add('blob1', 'righth', 'splitu')
-
-                }
-
-                col.appendChild(d1)
-                col.appendChild(d2)
-
-
-            } else if ((X === 0 && (Y > 0 && Y < 4)) || (Y === 0 && (X > 0 && X < 4)) || (Y === 4 && (X > 0 && X < 4)) || (X === 4 && (Y > 0 && Y < 4))) {
-                let d1 = document.createElement('div')
-                let d2 = document.createElement('div')
-                let d3 = document.createElement('div')
-                if (Y === 0 || Y === 4) {
-                    d1.classList.add('blob1', 'leftf', 'splitd')
-                    d2.classList.add('blob1', 'splitu')
-                    if (Y === 0) {
-                        d3.classList.add('blob1', 'rightf', 'splitr')
-                    } else {
-                        d3.classList.add('blob1', 'rightf', 'splitl')
-                    }
-                } else {
-                    d1.classList.add('blob1', 'leftf', 'splitr')
-                    d2.classList.add('blob1', 'splitl')
-                    if (X === 0) {
-                        d3.classList.add('blob1', 'rightf', 'splitd')
-                    } else {
-                        d3.classList.add('blob1', 'rightf', 'splitu')
-                    }
-                }
-                col.appendChild(d1)
-                col.appendChild(d2)
-                col.appendChild(d3)
+            d1.classList.add('blob1', 'leftf', 'splitr')
+            d2.classList.add('blob1', 'splitl')
+            if (X === 0) {
+                d3.classList.add('blob1', 'rightf', 'splitd')
             } else {
-                let d1 = document.createElement('div')
-                let d2 = document.createElement('div')
-                let d3 = document.createElement('div')
-                let d4 = document.createElement('div')
-                d1.classList.add('blob1', 'left2d', 'splitu')
-                d2.classList.add('blob1', 'lefth', 'splitd')
-                d3.classList.add('blob1', 'righth', 'splitl')
-                d4.classList.add('blob1', 'right2d', 'splitr')
-                col.appendChild(d1)
-                col.appendChild(d2)
-                col.appendChild(d3)
-                col.appendChild(d4)
+                d3.classList.add('blob1', 'rightf', 'splitu')
             }
-
-
         }
-        //if()
+        col.appendChild(d1)
+        col.appendChild(d2)
+        col.appendChild(d3)
+
+    } else {
+        d1 = document.createElement('div')
+        d2 = document.createElement('div')
+        d3= document.createElement('div')
+        d4 = document.createElement('div')
+        d1.addEventListener('animationend',()=>{
+            //d1.removeEventListener('animationend')
+            if(!j)
+            resolve('Split Animation done')
+            col.innerHTML=''
+        })
+        d1.classList.add('blob1', 'left2d', 'splitu')
+        d2.classList.add('blob1', 'lefth', 'splitd')
+        d3.classList.add('blob1', 'righth', 'splitl')
+        d4.classList.add('blob1', 'right2d', 'splitr')
+        col.appendChild(d1)
+        col.appendChild(d2)
+        col.appendChild(d3)
+        col.appendChild(d4) 
+    }
+
+
+}
+function updateScreen(cl)  {
+    return new Promise((resolve)=>{
+        let j=0;
+        let k=0;
+        for(i of cl){
+            console.log(i)
+            let X = i[0];
+            let Y = i[1];
+            let col = document.getElementById(`${i[0]} ${i[1]}`)
+            
+            if (i[2] == 0) {
+                spin(col,X,Y)
+                if(k===0){
+                    resolve('Animation ended')
+                    k=1
+                }
+            } else {
+                split(col,X,Y,resolve,j)
+                if(j===0)
+                {
+                    j=1
+                }
+                console.log('animation ended')
+            }
+        }
     })
-    aniState = []
 }
 function Clicked(e) {
     console.log(e['id'])
@@ -263,4 +302,4 @@ grid.forEach(i => {
     })
 
 })
-//setInterval(updateScreen,1000)
+//setInterval(updateScreen,1500)

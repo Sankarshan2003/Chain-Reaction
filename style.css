@@ -59,10 +59,10 @@
 
 @keyframes spinaround {
     from {
-        transform: rotate(0deg) translate(15px) scale(-0.8);
+        transform: rotate(0deg) translate(15px) scale(-0.7);
     }
     to {
-        transform: rotate(360deg) translate(15px) scale(-0.8);
+        transform: rotate(360deg) translate(15px) scale(-0.7);
     }
 }
 
@@ -82,18 +82,18 @@
 }
 .splitd{
     
-    animation: splitny 0.3s linear 1;
+    animation: splitny 0.8s linear 1;
 }
 .splitr{
    
-    animation: splitpx 0.3s linear 1;
+    animation: splitpx 0.8s linear 1;
 }
 .splitu{
-    animation: splitpy 0.3s linear 1;
+    animation: splitpy 0.8s linear 1;
 }
 .splitl
 {
-    animation: splitnx 0.3s linear 1;
+    animation: splitnx 0.8s linear 1;
 }
 @keyframes splitpx {
     from
