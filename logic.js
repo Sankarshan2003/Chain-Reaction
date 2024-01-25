@@ -56,6 +56,7 @@ let updateGameState = async (xy, gs) => {
     let y = xy[1];
     let currentLevel = [];
     let nextLevel = [];
+    let count=0;
     gs[x][y] += 1;
 
     currentLevel.push([x, y, 1])
@@ -67,6 +68,7 @@ let updateGameState = async (xy, gs) => {
                 i[2] = 0
                 // gs[X][Y]+=1
             } else {
+                count+=1;
                 if (X >= 0 && X < 4) {
                     gs[X + 1][Y] += 1;
                     //if(!isStable(gs,[X+1,Y]))
@@ -93,7 +95,8 @@ let updateGameState = async (xy, gs) => {
             }
         }
         //aniState.push(currentLevel)
-        await updateScreen(currentLevel)
+        await updateScreen(currentLevel,count)
+        count=0
         currentLevel = nextLevel;
         nextLevel = [];
 
@@ -149,19 +152,26 @@ let spin=(col,X,Y)=>{
             break;
     }
 }
-let split = (col,X,Y,resolve,j)=>{
+let split = (col,X,Y,resolve,count)=>{
     let d1;
     let d2;
     let d3;
     let d4;
     col.innerHTML=''
+    let k=1;
     if ((X === 0 && Y === 0) || (X === 0 && Y === 4) || (X === 4 && Y === 0) || (X === 4 && Y === 4)) {
         d1 = document.createElement('div')
         d2 = document.createElement('div')
         d1.addEventListener('animationend',()=>{
-            if(!j)
-            resolve('Split Animation done')
+            if(count.c===1){
+                col.innerHTML=''
+                resolve('Split Animation done')
+            }
+            else{
+                count.c-=1
             col.innerHTML=''
+            //k++
+            }
         })
         if ((X === 0 && Y === 0)) {
 
@@ -196,10 +206,15 @@ let split = (col,X,Y,resolve,j)=>{
          d2 = document.createElement('div')
          d3= document.createElement('div')
          d1.addEventListener('animationend',()=>{
-            //d1.removeEventListener('animationend')
-            if(!j)
-            resolve('Split Animation done')
+            if(count.c===1){
+                col.innerHTML=''
+                resolve('Split Animation done')
+            }
+            else{
+            count.c-=1
             col.innerHTML=''
+           // k++
+            }
         })
         if (Y === 0 || Y === 4) {
             d1.classList.add('blob1', 'leftf', 'splitd')
@@ -228,10 +243,15 @@ let split = (col,X,Y,resolve,j)=>{
         d3= document.createElement('div')
         d4 = document.createElement('div')
         d1.addEventListener('animationend',()=>{
-            //d1.removeEventListener('animationend')
-            if(!j)
-            resolve('Split Animation done')
+            if(count.c===1){
+                col.innerHTML=''
+                resolve ('Split Animation done')
+            }
+            else{
+            count.c-=1
             col.innerHTML=''
+           // k++
+            }
         })
         d1.classList.add('blob1', 'left2d', 'splitu')
         d2.classList.add('blob1', 'lefth', 'splitd')
@@ -245,10 +265,13 @@ let split = (col,X,Y,resolve,j)=>{
 
 
 }
-function updateScreen(cl)  {
+function updateScreen(cl,count)  {
     return new Promise((resolve)=>{
         let j=0;
         let k=0;
+        let spincount = cl.length-count;
+        let splitcount={}
+         splitcount.c=count;
         for(i of cl){
             console.log(i)
             let X = i[0];
@@ -257,17 +280,14 @@ function updateScreen(cl)  {
             
             if (i[2] == 0) {
                 spin(col,X,Y)
-                if(k===0){
-                    resolve('Animation ended')
-                    k=1
+                spincount-=1
+                if(spincount===0&&splitcount.c===0){
+                    resolve('Spin Animation ended')
                 }
             } else {
-                split(col,X,Y,resolve,j)
-                if(j===0)
-                {
-                    j=1
-                }
-                console.log('animation ended')
+                split(col,X,Y,resolve,splitcount)
+                //splitcount-=1
+                console.log('Split animation ended')
             }
         }
     })

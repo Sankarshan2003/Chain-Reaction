@@ -82,18 +82,17 @@
 }
 .splitd{
     
-    animation: splitny 0.8s linear 1;
+    animation: splitny 0.3s linear 1;
 }
-.splitr{
-   
-    animation: splitpx 0.8s linear 1;
+.splitr{   
+    animation: splitpx 0.3s linear 1;
 }
 .splitu{
-    animation: splitpy 0.8s linear 1;
+    animation: splitpy 0.3s linear 1;
 }
 .splitl
 {
-    animation: splitnx 0.8s linear 1;
+    animation: splitnx 0.3s linear 1;
 }
 @keyframes splitpx {
     from
