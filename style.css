@@ -3,17 +3,19 @@
     aspect-ratio: 1;
     padding: 0%;
     display: grid;
+    overflow: visible;
 }
 
-.col .blob1,
-.col .blob2,
-.col .blob3 {
+.col .blob1 {
     position: relative;
-    width: 2.8em;
-    height: 2.8em;
+    width: 2.0em;
+    height: 2.0em;
     border: 1px solid black;
     border-radius: 50%;
     background-color: red;
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box
 }
 .spin
 {
@@ -34,41 +36,43 @@
 
 .col .leftf
 {
-    left: 2.8em;
+    left: 2.0em;
 }
 .col .rightf
 {
-    right: 2.8em;
+    right: 2.0em;
 }
 
 .col .righth {
-   right: 1.4em;
+   right: 1.0em;
 }
 .col .lefth
 {
-    left: 1.4em;
+    left: 1.0em;
 }
 .col .left2d
 {
-    left: 4.2em;
+    left: 3.0em;
 }
 .col .right2d
 {
-    right:4.2em
+    right: 3.0em;
 }
 
 @keyframes spinaround {
     from {
-        transform: rotate(0deg) translate(15px) scale(-0.7);
+        transform: rotate(0deg) translate(10px) scale(1.0);
     }
     to {
-        transform: rotate(360deg) translate(15px) scale(-0.7);
+        transform: rotate(360deg) translate(10px) scale(1.0);
     }
 }
 
 .container {
     width: 100vh;
     height: 100vh;
+   
+    padding: 0%;
 }
 .animation {
     width: 100%;
@@ -78,7 +82,9 @@
     align-items: center;
     align-self: center;
     justify-self: center;
-    padding: 0;
+    box-sizing: border-box;
+    overflow: visible;
+    padding: 0%!important;
 }
 .splitd{
     
@@ -97,41 +103,41 @@
 @keyframes splitpx {
     from
     {
-        transform: scale(-0.7);
+        transform: scale(1.0);
     }
     to
     {
-        transform: translate(7em) scale(-0.7);
+        transform: translate(7em) scale(1.0);
     }
 }
 @keyframes splitnx {
     from
     {
-        transform: scale(0.7);
+        transform: scale(1.0);
     }
     to
     {
-        transform: translate(-7em) scale(-0.7);
+        transform: translate(-7em) scale(1.0);
     }
 }
 
 @keyframes splitny {
     from
     {
-        transform: scale(-0.7);
+        transform: scale(1.0);
     }
     to
     {
-        transform: translateY(7em) scale(-0.7);
+        transform: translateY(7em) scale(1.0);
     }
 }
 @keyframes splitpy {
     from
     {
-        transform: scale(-0.7);
+        transform: scale(1.0);
     }
     to
     {
-        transform: translateY(-7em) scale(-0.7);
+        transform: translateY(-7em) scale(1.0);
     }
 }
